@@ -5,7 +5,7 @@ $pdo = new PDO("sqlite:$dbPath");
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
-if ($id === false) {
+if ($id === false || $id  === null) {
     header('Location: /?sucesso=0');
     exit();
 }
