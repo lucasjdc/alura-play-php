@@ -2,10 +2,19 @@
 
 declare(strict_types=1);
 
+use Alura\Mvc\Controller\VideoListController;
+use Alura\Mvc\Repository\VideosRepository;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
+$dbPath = __DIR__ . '/../banco.sqlite';
+$pdo = new PDO("sqlite:$dbPath");
+$videoRepository = new VideosRepository($pdo);
+
 if (empty($_SERVER['PATH_INFO']) || $_SERVER['PATH_INFO'] === '/') {
-    require_once __DIR__ . '/../listagem-videos.php';
+    $controller = new VideoListController($videoRepository);
+    $controller->processaRequisicao();
+
 } elseif ($_SERVER['PATH_INFO'] === '/novo-video') {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         require_once __DIR__ . '/../formulario.php';
