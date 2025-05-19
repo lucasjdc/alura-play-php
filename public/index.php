@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 if (empty($_SERVER['PATH_INFO']) || $_SERVER['PATH_INFO'] === '/') {
     require_once __DIR__ . '/../listagem-videos.php';
 } elseif ($_SERVER['PATH_INFO'] === '/novo-video') {
