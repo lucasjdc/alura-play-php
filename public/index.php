@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Alura\Mvc\Controller\EditVideoController;
 use Alura\Mvc\Controller\FormController;
 use Alura\Mvc\Controller\VideoListController;
 use Alura\Mvc\Repository\VideosRepository;
@@ -27,7 +28,8 @@ if (empty($_SERVER['PATH_INFO']) || $_SERVER['PATH_INFO'] === '/') {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         require_once __DIR__ . '/../video-form.php';
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        require_once __DIR__ . '/../editar-video.php';
+        $controller = new EditVideoController($videoRepository);
+        $controller->processaRequisicao();
     }
 } elseif ($_SERVER['PATH_INFO'] === '/remover-video') {
     require_once __DIR__ . '/../remover-video.php';
