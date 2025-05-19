@@ -6,7 +6,7 @@ namespace Alura\Mvc\Entity;
 
 class Video
 {
-    private int $id;
+    private ?int $id = null;
     private string $url;
     private string $title;
 
@@ -29,7 +29,7 @@ class Video
         $this->id = $id;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

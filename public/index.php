@@ -1,7 +1,11 @@
 <?php
 
 declare(strict_types=1);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
+use Alura\Mvc\Controller\CreateVideoController;
 use Alura\Mvc\Controller\EditVideoController;
 use Alura\Mvc\Controller\FormController;
 use Alura\Mvc\Controller\VideoListController;
@@ -22,7 +26,8 @@ if (empty($_SERVER['PATH_INFO']) || $_SERVER['PATH_INFO'] === '/') {
         $controller = new FormController($videoRepository);
         $controller->processaRequisicao();
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        require_once __DIR__ . '/../novo-video.php';
+        $controller = new CreateVideoController($videoRepository);
+        $controller->processaRequisicao();
     }
 } elseif ($_SERVER['PATH_INFO'] === '/editar-video') {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {

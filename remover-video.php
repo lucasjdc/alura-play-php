@@ -2,13 +2,17 @@
 
 use Alura\Mvc\Repository\VideosRepository;
 
-$dpPath = __DIR__ . '/banco.sqlite';
-$pdo = new PDO("sqlite:$dpPath");
+require_once __DIR__ . '/vendor/autoload.php';
 
-$id = $_GET['id'];
-$sql = 'DELETE FROM videos WHERE id = ?';
-$statement = $pdo->prepare($sql);
-$statement->bindValue(1, $id);
+$dbPath = __DIR__ . '/banco.sqlite';
+$pdo = new PDO("sqlite:$dbPath");
+
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+if ($id === false || $id === null) {
+    header('Location: /?sucesso=0');
+    exit();
+}
 
 $repository = new VideosRepository($pdo);
 

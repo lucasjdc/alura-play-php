@@ -35,18 +35,15 @@ class VideosRepository
         }
     }
 
+
     public function remove(int $id): bool
     {
-        try {
-            $stmt = $this->pdo->prepare('DELETE FROM videos WHERE id = ?');
-            $stmt->bindValue(1, $id, PDO::PARAM_INT);
-            $stmt->execute();
-
-            return $stmt->rowCount() > 0;
-        } catch (PDOException $e) {
-            throw new RuntimeException('Erro ao remover vídeo: ' . $e->getMessage(), 0, $e);
-        }
+        $stmt = $this->pdo->prepare('DELETE FROM videos WHERE id = ?');
+        $stmt->bindValue(1, $id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
+
+  
 
     public function update(Video $video): bool
     {
