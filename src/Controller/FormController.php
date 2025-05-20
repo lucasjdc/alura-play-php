@@ -9,13 +9,13 @@ use Alura\Mvc\Repository\VideosRepository;
 class FormController
 {
     public function __construct(private VideosRepository $repository)
-    {        
+    {
     }
 
-    public function processaRequisicao(): void 
+    public function processaRequisicao(): void
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        $video = [
+        $videoData = [
             'url' => '',
             'title' => '',
         ];
@@ -23,9 +23,10 @@ class FormController
         if ($id !== false && $id !== null) {
             $videoEntity = $this->repository->findById($id);
             if ($videoEntity !== null) {
-                $video = [
+                $videoData = [
                     'url' => $videoEntity->getUrl(),
                     'title' => $videoEntity->getTitle(),
+                    'id' => $videoEntity->getId(), // Passa o ID para a view para o campo hidden
                 ];
             }
         }

@@ -21,27 +21,20 @@ $videoRepository = new VideosRepository($pdo);
 
 if (empty($_SERVER['PATH_INFO']) || $_SERVER['PATH_INFO'] === '/') {
     $controller = new VideoListController($videoRepository);
-    $controller->processaRequisicao();
-
 } elseif ($_SERVER['PATH_INFO'] === '/novo-video') {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $controller = new FormController($videoRepository);
-        $controller->processaRequisicao();
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $controller = new CreateVideoController($videoRepository);
-        $controller->processaRequisicao();
     }
 } elseif ($_SERVER['PATH_INFO'] === '/editar-video') {
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        require_once __DIR__ . '/../video-form.php';
-    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $controller = new EditVideoController($videoRepository);
-        $controller->processaRequisicao();
+    $controller = new FormController($videoRepository); // Agora usa FormController para exibir o formulário de edição
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $controller = new EditVideoController($videoRepository); // EditVideoController processa a submissão
     }
 } elseif ($_SERVER['PATH_INFO'] === '/remover-video') {
     $controller = new DeleteVideoController($videoRepository);
-    $controller->processaRequisicao();
 } else {
     $controller = new Error404Controller();
-    $controller->processaRequisicao();
 }
+$controller->processaRequisicao();
