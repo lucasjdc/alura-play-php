@@ -6,7 +6,9 @@ ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
 use Alura\Mvc\Controller\CreateVideoController;
+use Alura\Mvc\Controller\DeleteVideoController;
 use Alura\Mvc\Controller\EditVideoController;
+use Alura\Mvc\Controller\Error404Controller;
 use Alura\Mvc\Controller\FormController;
 use Alura\Mvc\Controller\VideoListController;
 use Alura\Mvc\Repository\VideosRepository;
@@ -37,7 +39,9 @@ if (empty($_SERVER['PATH_INFO']) || $_SERVER['PATH_INFO'] === '/') {
         $controller->processaRequisicao();
     }
 } elseif ($_SERVER['PATH_INFO'] === '/remover-video') {
-    require_once __DIR__ . '/../remover-video.php';
+    $controller = new DeleteVideoController($videoRepository);
+    $controller->processaRequisicao();
 } else {
-    http_response_code(404);
+    $controller = new Error404Controller();
+    $controller->processaRequisicao();
 }
